@@ -10,6 +10,35 @@ from django.http import HttpResponse
 def home(request):
     return HttpResponse("Welcome to the Sound Classifier API!")
 
+def get_default_drum_sounds():
+    drum_sounds_directory = os.path.join('static', 'drum_sounds')
+    default_sounds = ['drumkick.wav', 'clap.wav', 'snare.wav']  # List your drum sounds here
+    sound_paths = [os.path.join(drum_sounds_directory, sound) for sound in default_sounds]
+    return sound_paths
+
+@api_view(['POST'])
+def convert_audio(request):
+    """Handle audio file conversion with default or custom drum sounds"""
+    audio_file = request.FILES.get('audioFile')
+    drum_sound = request.data.get('drumSound')  # Get drum sound from the request
+
+    if not drum_sound:  # If no drum sound is provided, use the default drum sound
+        drum_sound = 'drumkick.wav'  # Default drum sound
+
+    if audio_file:
+        # Process the audio file and use the drum sound (from default or custom)
+        sound = AudioSegment.from_file(audio_file)
+        
+        # Implement your logic to replace the detected sound with the selected drum sound
+        # Save the converted file
+        converted_path = os.path.join('media/converted', f'converted_{audio_file.name}')
+        sound.export(converted_path, format="wav")
+
+        return Response({"message": "Audio converted", "file": converted_path}, status=200)
+
+    return Response({"error": "Invalid audio file"}, status=400)
+
+    
 @api_view(['POST'])
 def assign_sound(request):
     """Handle sound assignment (upload sound file and associate with a drum sound)"""

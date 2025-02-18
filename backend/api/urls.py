@@ -8,5 +8,6 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('assign-sound/', views.assign_sound, name='assign_sound'),
     path('convert-audio/', views.convert_audio, name='convert_audio'),
+    path('convert-audio/', views.convert_audio, name='convert_audio'),
     # Add more API routes as needed
 ]

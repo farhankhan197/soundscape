@@ -1,6 +1,8 @@
 "use client"
 import { useEffect, useState } from "react";
 import AudioUpload from "./components/AudioUpload";
+import DrumSoundSelector from "./components/DrumSelector";
+import AudioConverter from "./components/AudioConverter";
 
 export default function SoundClassifier() {
   const [drumSounds, setDrumSounds] = useState(["Drumkick", "Hi-hat", "Snare"]);
@@ -86,7 +88,9 @@ export default function SoundClassifier() {
           <p>{drum} - <audio controls src={assignedSounds[drum]} /></p>
         </div>
       ))}
-    <AudioUpload></AudioUpload>
+    <AudioUpload/>
+    <DrumSoundSelector />
+    <AudioConverter />
     </div>
   );
 }

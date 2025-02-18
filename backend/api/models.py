@@ -6,3 +6,4 @@ class SoundAssignment(models.Model):
 
     def __str__(self):
         return f"{self.drum_sound} -> {self.sound_file.name}"
+
